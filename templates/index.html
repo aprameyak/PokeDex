@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokedex Online</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <span class="pokeball">&#9898;</span>
+      <h1>Pok&eacute;dex <span class="version">Online v2.4</span></h1>
+    </div>
+    <nav>
+      <a href="#search">Search</a>
+      <a href="#team">My Team</a>
+      <a href="#upload">Sprites</a>
+      <a href="#stats">Stats</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ── Search (Command Injection) ── -->
+    <section id="search" class="card">
+      <h2>&#128270; Find a Pok&eacute;mon</h2>
+      <p class="subtitle">Search the National Pok&eacute;dex by name</p>
+      <div class="input-row">
+        <input id="searchName" type="text" placeholder="e.g. pikachu" />
+        <button onclick="searchPokemon()">Search</button>
+      </div>
+      <div id="searchResults" class="results"></div>
+    </section>
+
+    <!-- ── Team Builder (SQL Injection) ── -->
+    <section id="team" class="card">
+      <h2>&#127942; Team Builder</h2>
+      <p class="subtitle">Add Pok&eacute;mon to your trainer roster</p>
+      <div class="input-row">
+        <input id="trainerName" type="text" placeholder="Trainer name" />
+        <input id="pokemonName" type="text" placeholder="Pok&eacute;mon name" />
+        <button onclick="addToTeam()">Add</button>
+      </div>
+      <div class="input-row" style="margin-top:8px">
+        <input id="lookupTrainer" type="text" placeholder="Lookup trainer" />
+        <button onclick="lookupTeam()">View Team</button>
+      </div>
+      <div id="teamResults" class="results"></div>
+    </section>
+
+    <!-- ── Pokedex Search (XSS) ── -->
+    <section id="xss" class="card">
+      <h2>&#128218; Pok&eacute;dex Browser</h2>
+      <p class="subtitle">Browse the full Pok&eacute;dex index</p>
+      <div class="input-row">
+        <input id="dexSearch" type="text" placeholder="Search by name..." />
+        <button onclick="dexSearch()">Browse</button>
+      </div>
+      <div id="dexResults" class="results"></div>
+    </section>
+
+    <!-- ── Sprite Upload (Unrestricted Upload) ── -->
+    <section id="upload" class="card">
+      <h2>&#127912; Sprite Upload</h2>
+      <p class="subtitle">Upload custom Pok&eacute;mon sprites to the gallery</p>
+      <div class="input-row">
+        <input id="spriteFile" type="file" />
+        <button onclick="uploadSprite()">Upload</button>
+      </div>
+      <div id="uploadResult" class="results"></div>
+    </section>
+
+    <!-- ── Stats Fetcher (SSRF) ── -->
+    <section id="stats" class="card">
+      <h2>&#128202; Battle Stats</h2>
+      <p class="subtitle">Fetch live stats from an external Pok&eacute;dex API</p>
+      <div class="input-row">
+        <input id="statsUrl" type="text" placeholder="https://pokeapi.co/api/v2/pokemon/pikachu" style="flex:2" />
+        <button onclick="fetchStats()">Fetch</button>
+      </div>
+      <div id="statsResult" class="results"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Pok&eacute;dex Online &mdash; All data &copy; Nintendo / Game Freak. Fan project.</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
