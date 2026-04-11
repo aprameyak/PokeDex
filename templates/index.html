@@ -9,7 +9,13 @@
 <body>
   <header>
     <div class="logo">
-      <span class="pokeball">&#9898;</span>
+      <svg class="logo-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#fff" stroke-width="2.5"/>
+        <path d="M2 20 H38" stroke="#fff" stroke-width="2.5"/>
+        <circle cx="20" cy="20" r="6" fill="#cc0000" stroke="#fff" stroke-width="2.5"/>
+        <circle cx="20" cy="20" r="3" fill="#fff"/>
+        <path d="M2 20 A18 18 0 0 1 38 20" fill="#cc0000"/>
+      </svg>
       <h1>Pok&eacute;dex <span class="version">Online v2.4</span></h1>
     </div>
     <nav>
@@ -22,9 +28,8 @@
 
   <main>
 
-    <!-- ── Search (Command Injection) ── -->
     <section id="search" class="card">
-      <h2>&#128270; Find a Pok&eacute;mon</h2>
+      <h2>Find a Pok&eacute;mon</h2>
       <p class="subtitle">Search the National Pok&eacute;dex by name</p>
       <div class="input-row">
         <input id="searchName" type="text" placeholder="e.g. pikachu" />
@@ -33,9 +38,8 @@
       <div id="searchResults" class="results"></div>
     </section>
 
-    <!-- ── Team Builder (SQL Injection) ── -->
     <section id="team" class="card">
-      <h2>&#127942; Team Builder</h2>
+      <h2>Team Builder</h2>
       <p class="subtitle">Add Pok&eacute;mon to your trainer roster</p>
       <div class="input-row">
         <input id="trainerName" type="text" placeholder="Trainer name" />
@@ -49,9 +53,8 @@
       <div id="teamResults" class="results"></div>
     </section>
 
-    <!-- ── Pokedex Search (XSS) ── -->
     <section id="xss" class="card">
-      <h2>&#128218; Pok&eacute;dex Browser</h2>
+      <h2>Pok&eacute;dex Browser</h2>
       <p class="subtitle">Browse the full Pok&eacute;dex index</p>
       <div class="input-row">
         <input id="dexSearch" type="text" placeholder="Search by name..." />
@@ -60,9 +63,8 @@
       <div id="dexResults" class="results"></div>
     </section>
 
-    <!-- ── Sprite Upload (Unrestricted Upload) ── -->
     <section id="upload" class="card">
-      <h2>&#127912; Sprite Upload</h2>
+      <h2>Sprite Upload</h2>
       <p class="subtitle">Upload custom Pok&eacute;mon sprites to the gallery</p>
       <div class="input-row">
         <input id="spriteFile" type="file" />
@@ -71,9 +73,8 @@
       <div id="uploadResult" class="results"></div>
     </section>
 
-    <!-- ── Stats Fetcher (SSRF) ── -->
     <section id="stats" class="card">
-      <h2>&#128202; Battle Stats</h2>
+      <h2>Battle Stats</h2>
       <p class="subtitle">Fetch live stats from an external Pok&eacute;dex API</p>
       <div class="input-row">
         <input id="statsUrl" type="text" placeholder="https://pokeapi.co/api/v2/pokemon/pikachu" style="flex:2" />

@@ -3,33 +3,43 @@
 
 :root {
   --red:    #cc0000;
-  --dark:   #1a1a2e;
-  --mid:    #16213e;
-  --card:   #0f3460;
+  --dark:   #0d1b2a;
+  --mid:    #1b2d40;
+  --card:   rgba(15, 30, 50, 0.88);
   --accent: #e94560;
   --text:   #eaeaea;
-  --muted:  #a0a0b0;
+  --muted:  #8da8c0;
   --green:  #4caf50;
   --radius: 10px;
 }
 
+/* ── Pokemon background ───────────────────────────────────── */
 body {
   font-family: "Segoe UI", system-ui, sans-serif;
-  background: var(--dark);
   color: var(--text);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  /* layered background: grass gradient base + subtle pokeball tile */
+  background-color: #0d1b2a;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='22' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1.5'/%3E%3Cline x1='18' y1='40' x2='62' y2='40' stroke='rgba(255,255,255,0.04)' stroke-width='1.5'/%3E%3Ccircle cx='40' cy='40' r='7' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1.5'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 20% 0%, #1a3a20 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, #1a2040 0%, transparent 55%),
+    linear-gradient(160deg, #0a1628 0%, #0d2a1a 40%, #0a1628 100%);
 }
 
 /* ── Header ───────────────────────────────────────────────── */
 header {
-  background: var(--red);
+  background: rgba(180, 0, 0, 0.92);
+  backdrop-filter: blur(6px);
   padding: 12px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0,0,0,.5);
+  box-shadow: 0 2px 12px rgba(0,0,0,.6);
+  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
 .logo {
@@ -38,15 +48,8 @@ header {
   gap: 12px;
 }
 
-.pokeball {
-  font-size: 2rem;
-  filter: drop-shadow(0 0 6px #fff8);
-  animation: spin 6s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+.logo-icon {
+  flex-shrink: 0;
 }
 
 header h1 {
@@ -89,14 +92,17 @@ main {
   background: var(--card);
   border-radius: var(--radius);
   padding: 28px 32px;
-  border: 1px solid rgba(255,255,255,.07);
-  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  border: 1px solid rgba(255,255,255,.09);
+  box-shadow: 0 4px 24px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
+  backdrop-filter: blur(8px);
 }
 
 .card h2 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   margin-bottom: 4px;
   color: #fff;
+  font-weight: 700;
+  letter-spacing: .3px;
 }
 
 .subtitle {
@@ -119,13 +125,16 @@ input[type="file"] {
   padding: 9px 14px;
   border-radius: 6px;
   border: 1px solid rgba(255,255,255,.15);
-  background: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.07);
   color: var(--text);
   font-size: .9rem;
   outline: none;
-  transition: border-color .2s;
+  transition: border-color .2s, background .2s;
 }
-input[type="text"]:focus { border-color: var(--accent); }
+input[type="text"]:focus {
+  border-color: var(--accent);
+  background: rgba(255,255,255,.10);
+}
 
 input[type="file"] {
   padding: 6px;
@@ -211,7 +220,7 @@ pre {
   word-break: break-all;
 }
 
-/* ── Search results page (XSS endpoint) ──────────────────── */
+/* ── Search results page ──────────────────────────────────── */
 .search-results {
   max-width: 600px;
   margin: 40px auto;
@@ -219,6 +228,9 @@ pre {
   background: var(--card);
   border-radius: var(--radius);
   color: var(--text);
+  border: 1px solid rgba(255,255,255,.09);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 24px rgba(0,0,0,.5);
 }
 .search-results h2 { margin-bottom: 10px; }
 .search-results ul { padding-left: 20px; margin-top: 12px; }

@@ -24,14 +24,11 @@ def index():
     return render_template("index.html")
 
 
-# ── 1. Command Injection ──────────────────────────────────────────────────────
-# GET /api/pokemon?name=pikachu
-# Vulnerable: unsanitised input passed directly to shell via os.system
+# ── GET /api/pokemon?name=pikachu ─────────────────────────────────────────────
 @app.route("/api/pokemon")
 def get_pokemon():
     name = request.args.get("name", "")
     output_file = "/tmp/pokedex_result.txt"
-    # VULNERABLE: name is not sanitised before being interpolated into the shell command
     os.system(f"grep -i {name} pokedex.csv > {output_file} 2>&1")
     try:
         with open(output_file) as f:
@@ -54,13 +51,10 @@ def get_pokemon():
                 "speed": parts[7],
             })
 
-    # raw_output is included so injected command output is visible in the response
     return jsonify({"query": name, "results": results, "raw_output": raw})
 
 
-# ── 2. SQL Injection ──────────────────────────────────────────────────────────
-# POST /api/team  body: {"trainer": "ash", "pokemon": "pikachu"}
-# Vulnerable: trainer/pokemon values concatenated raw into SQL
+# ── POST /api/team  body: {"trainer": "ash", "pokemon": "pikachu"} ────────────
 @app.route("/api/team", methods=["POST"])
 def add_to_team():
     data = request.get_json(force=True) or {}
@@ -69,7 +63,6 @@ def add_to_team():
 
     conn = get_db()
     try:
-        # VULNERABLE: raw string concatenation — no parameterisation
         query = f"INSERT INTO teams (trainer, pokemon) VALUES ('{trainer}', '{pokemon}')"
         conn.execute(query)
         conn.commit()
@@ -85,7 +78,6 @@ def get_team():
     trainer = request.args.get("trainer", "")
     conn = get_db()
     try:
-        # VULNERABLE: same raw concat pattern on GET
         query = f"SELECT * FROM teams WHERE trainer = '{trainer}'"
         rows = conn.execute(query).fetchall()
         return jsonify({"trainer": trainer, "team": [dict(r) for r in rows]})
@@ -95,9 +87,7 @@ def get_team():
         conn.close()
 
 
-# ── 3. Reflected XSS ─────────────────────────────────────────────────────────
-# GET /api/pokedex?search=<input>
-# Vulnerable: search term reflected into HTML without escaping
+# ── GET /api/pokedex?search=<query> ──────────────────────────────────────────
 @app.route("/api/pokedex")
 def pokedex_search():
     search = request.args.get("search", "")
@@ -108,14 +98,10 @@ def pokedex_search():
     conn.close()
 
     results = [dict(r) for r in rows]
-
-    # VULNERABLE: search passed to template with | safe — XSS via Jinja2 autoescaping bypass
     return render_template("search.html", search=search, count=len(results), results=results)
 
 
-# ── 4. Unrestricted File Upload ───────────────────────────────────────────────
-# POST /api/upload-sprite  multipart form field: "sprite"
-# Vulnerable: no extension or MIME-type validation
+# ── POST /api/upload-sprite  multipart field: "sprite" ───────────────────────
 @app.route("/api/upload-sprite", methods=["POST"])
 def upload_sprite():
     if "sprite" not in request.files:
@@ -125,7 +111,6 @@ def upload_sprite():
     if file.filename == "":
         return jsonify({"status": "error", "message": "Empty filename"}), 400
 
-    # VULNERABLE: accepts any file type, no MIME or extension check
     filename = secure_filename(file.filename)
     save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     file.save(save_path)
@@ -142,9 +127,7 @@ def uploaded_file(filename):
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 
-# ── 5. SSRF ───────────────────────────────────────────────────────────────────
-# GET /api/stats?pokemon=http://pokeapi.co/api/v2/pokemon/pikachu
-# Vulnerable: user-supplied URL fetched server-side without restriction
+# ── GET /api/stats?pokemon=<url> ─────────────────────────────────────────────
 @app.route("/api/stats")
 def get_stats():
     url = request.args.get("pokemon", "")
@@ -152,7 +135,6 @@ def get_stats():
         return jsonify({"status": "error", "message": "No pokemon URL provided"}), 400
 
     try:
-        # VULNERABLE: fetches any URL the user provides — internal network reachable
         with urllib.request.urlopen(url, timeout=5) as resp:
             content_type = resp.headers.get("Content-Type", "")
             body = resp.read(4096).decode("utf-8", errors="replace")

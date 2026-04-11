@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Pokedex Search</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Results &mdash; Pok&eacute;dex Online</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <div class="search-results">
-    <!-- VULNERABLE: search term rendered with | safe — disables Jinja2 autoescaping -->
     <h2>Search results for: {{ search | safe }}</h2>
-    <p>{{ count }} Pokemon found</p>
+    <p>{{ count }} Pok&eacute;mon found</p>
     <ul>
       {% for p in results %}
         <li><strong>#{{ p.id }} {{ p.name }}</strong> &mdash; {{ p.type1 }}</li>
       {% endfor %}
     </ul>
-    <a href="/">Back to Pokedex</a>
+    <a href="/">Back to Pok&eacute;dex</a>
   </div>
 </body>
 </html>
