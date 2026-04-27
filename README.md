@@ -1,5 +1,8 @@
 # Pokedex Online
 
+> ⚠️ **Intentionally vulnerable application — for research and education only.**
+> This project contains deliberate security flaws (command injection, SQL injection, reflected XSS, unrestricted file upload, SSRF) used as teaching material. **Do not deploy it on a public network or any machine handling real data.** Run it only in an isolated local or sandboxed environment.
+
 A web-based Pokedex built with Flask. Search for Pokemon, manage trainer teams, browse sprites, and pull live stats from external APIs.
 
 ## Features
@@ -54,3 +57,7 @@ The app runs on `http://localhost:8080` by default.
 ## Data
 
 Pokemon data sourced from the public domain Pokedex CSV dataset (Gen 1–8, 800+ entries). All Pokemon names, types, and stats are property of Nintendo / Game Freak. This is an unofficial fan project.
+
+## License
+
+Released under the [MIT License](LICENSE). Contributions welcome under the same terms.
