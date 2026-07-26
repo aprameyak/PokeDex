@@ -1,63 +1,25 @@
-# Pokedex Online
+# PokeDex
 
-> ⚠️ **Intentionally vulnerable application — for research and education only.**
-> This project contains deliberate security flaws (command injection, SQL injection, reflected XSS, unrestricted file upload, SSRF) used as teaching material. **Do not deploy it on a public network or any machine handling real data.** Run it only in an isolated local or sandboxed environment.
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=for-the-badge)
+![Flask](https://img.shields.io/badge/Flask-000000?logo=flask&logoColor=white&style=for-the-badge)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white&style=for-the-badge)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black&style=for-the-badge)
 
-A web-based Pokedex built with Flask. Search for Pokemon, manage trainer teams, browse sprites, and pull live stats from external APIs.
+## About
+
+**PokeDex** is a web-based Pokedex built with **Flask** and **Python** that lets users search the National Pokedex by name, manage trainer teams stored in a local **SQLite** database, and fetch live battle stats from an external Pokedex API. The dataset covers Generation 1–8 (800+ entries) sourced from a public-domain CSV.
 
 ## Features
 
-- **Pokemon Search** — search the National Pokedex by name
-- **Team Builder** — create and look up trainer teams stored in a local database
-- **Pokedex Browser** — server-rendered search results page
-- **Sprite Upload** — upload custom Pokemon sprites to the gallery
-- **Battle Stats** — fetch live stat data from an external Pokedex API
+- Pokemon search across the full National Pokedex (Gen 1–8) by name
+- Trainer team builder — create and retrieve teams persisted in SQLite
+- Server-rendered search results page for browsing the Pokedex
+- Custom sprite upload endpoint for adding images to the gallery
+- Live battle stat fetching via an external Pokedex API
+- REST API with clearly defined endpoints for all core operations
 
-## Setup
+## Technology Stack
 
-**Requirements:** Python 3.10+
-
-```bash
-pip install -r requirements.txt
-python init_db.py
-python app.py
-```
-
-The app runs on `http://localhost:8080` by default.
-
-## Project Structure
-
-```
-.
-├── app.py              # Flask application and API routes
-├── init_db.py          # Database initialization script
-├── pokedex.csv         # Pokedex data (Gen 1–8)
-├── pokedex.db          # SQLite database (created on first run)
-├── requirements.txt
-├── static/
-│   ├── app.js          # Frontend logic
-│   └── style.css       # Styles
-├── templates/
-│   ├── index.html      # Main page
-│   └── search.html     # Search results page
-└── uploads/            # Uploaded sprites
-```
-
-## API Reference
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/pokemon?name=<name>` | Search Pokedex by name |
-| POST | `/api/team` | Add a Pokemon to a trainer's team |
-| GET | `/api/team?trainer=<name>` | Get a trainer's team |
-| GET | `/api/pokedex?search=<query>` | Server-rendered Pokedex search |
-| POST | `/api/upload-sprite` | Upload a sprite image |
-| GET | `/api/stats?pokemon=<url>` | Fetch stats from an external API |
-
-## Data
-
-Pokemon data sourced from the public domain Pokedex CSV dataset (Gen 1–8, 800+ entries). All Pokemon names, types, and stats are property of Nintendo / Game Freak. This is an unofficial fan project.
-
-## License
-
-Released under the [MIT License](LICENSE). Contributions welcome under the same terms.
+- **Backend**: Python, Flask
+- **Database**: SQLite
+- **Frontend**: HTML, CSS, JavaScript
