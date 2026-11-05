@@ -5,10 +5,15 @@ from flask import Flask, request, jsonify, render_template, send_from_directory
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.config["UPLOAD_FOLDER"] = "uploads"
-os.makedirs("uploads", exist_ok=True)
+# Vercel only allows writes under /tmp
+WRITABLE_DIR = "/tmp" if os.environ.get("VERCEL") else "."
+app.config["UPLOAD_FOLDER"] = os.path.join(WRITABLE_DIR, "uploads")
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
-DB_PATH = "pokedex.db"
+DB_PATH = os.path.join(WRITABLE_DIR, "pokedex.db")
+os.environ.setdefault("POKEDEX_DB", DB_PATH)
+if not os.path.exists(DB_PATH):
+    import init_db  # noqa: F401
 
 
 def get_db():
@@ -146,6 +151,4 @@ def get_stats():
 # ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    if not os.path.exists(DB_PATH):
-        import init_db  # noqa: F401
     app.run(host="0.0.0.0", port=8080, debug=True)

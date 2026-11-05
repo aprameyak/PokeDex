@@ -1,6 +1,7 @@
+import os
 import sqlite3
 
-conn = sqlite3.connect("pokedex.db")
+conn = sqlite3.connect(os.environ.get("POKEDEX_DB", "pokedex.db"))
 c = conn.cursor()
 
 c.execute("""
