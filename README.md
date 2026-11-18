@@ -1,25 +1,36 @@
 # PokeDex
 
-![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=for-the-badge)
-![Flask](https://img.shields.io/badge/Flask-000000?logo=flask&logoColor=white&style=for-the-badge)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white&style=for-the-badge)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black&style=for-the-badge)
+Live site: https://pokedex.aprameyak.workers.dev
 
-## About
-
-**PokeDex** is a web-based Pokedex built with **Flask** and **Python** that lets users search the National Pokedex by name, manage trainer teams stored in a local **SQLite** database, and fetch live battle stats from an external Pokedex API. The dataset covers Generation 1–8 (800+ entries) sourced from a public-domain CSV.
+A small Pokédex that runs on Cloudflare Workers. Search Pokémon by name or number, browse the full list, and build trainer teams of up to six.
 
 ## Features
 
-- Pokemon search across the full National Pokedex (Gen 1–8) by name
-- Trainer team builder — create and retrieve teams persisted in SQLite
-- Server-rendered search results page for browsing the Pokedex
-- Custom sprite upload endpoint for adding images to the gallery
-- Live battle stat fetching via an external Pokedex API
-- REST API with clearly defined endpoints for all core operations
+- Search by name or Pokédex number
+- Browse the full Pokédex
+- Trainer team builder backed by Cloudflare D1
 
-## Technology Stack
+## Stack
 
-- **Backend**: Python, Flask
-- **Database**: SQLite
-- **Frontend**: HTML, CSS, JavaScript
+- Cloudflare Workers with static assets
+- Cloudflare D1
+- Plain HTML, CSS and JavaScript
+
+## API
+
+| Endpoint | Description |
+| --- | --- |
+| `GET /api/pokemon?name=` | Search by name or id |
+| `GET /api/pokedex?search=` | Browse, or list all when empty |
+| `GET /api/team?trainer=` | List a trainer's team |
+| `POST /api/team` | Add a Pokémon, body `{ "trainer", "pokemon" }` |
+
+## Development
+
+```sh
+npm install
+npx wrangler d1 execute pokedex-db --local --file migrations/0001_init.sql
+npx wrangler dev
+```
+
+Deploy with `npx wrangler deploy`.

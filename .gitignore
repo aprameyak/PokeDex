@@ -1,7 +1,2 @@
-pokedex.db
-uploads/
-__pycache__/
-*.pyc
-.env
-.venv/
-/tmp/
+node_modules
+.wrangler

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pokedex Online</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header>
@@ -21,8 +21,7 @@
     <nav>
       <a href="#search">Search</a>
       <a href="#team">My Team</a>
-      <a href="#upload">Sprites</a>
-      <a href="#stats">Stats</a>
+      <a href="#browse">Browse</a>
     </nav>
   </header>
 
@@ -53,7 +52,7 @@
       <div id="teamResults" class="results"></div>
     </section>
 
-    <section id="xss" class="card">
+    <section id="browse" class="card">
       <h2>Pok&eacute;dex Browser</h2>
       <p class="subtitle">Browse the full Pok&eacute;dex index</p>
       <div class="input-row">
@@ -63,32 +62,12 @@
       <div id="dexResults" class="results"></div>
     </section>
 
-    <section id="upload" class="card">
-      <h2>Sprite Upload</h2>
-      <p class="subtitle">Upload custom Pok&eacute;mon sprites to the gallery</p>
-      <div class="input-row">
-        <input id="spriteFile" type="file" />
-        <button onclick="uploadSprite()">Upload</button>
-      </div>
-      <div id="uploadResult" class="results"></div>
-    </section>
-
-    <section id="stats" class="card">
-      <h2>Battle Stats</h2>
-      <p class="subtitle">Fetch live stats from an external Pok&eacute;dex API</p>
-      <div class="input-row">
-        <input id="statsUrl" type="text" placeholder="https://pokeapi.co/api/v2/pokemon/pikachu" style="flex:2" />
-        <button onclick="fetchStats()">Fetch</button>
-      </div>
-      <div id="statsResult" class="results"></div>
-    </section>
-
   </main>
 
   <footer>
     <p>Pok&eacute;dex Online &mdash; All data &copy; Nintendo / Game Freak. Fan project.</p>
   </footer>
 
-  <script src="/static/app.js"></script>
+  <script src="/app.js"></script>
 </body>
 </html>
